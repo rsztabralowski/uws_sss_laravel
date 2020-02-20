@@ -11,10 +11,8 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
 Auth::routes();
+Route::resource('facts', 'FactController');
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/', 'FactController@index')->name('main');
+Route::get('/account', 'AccountController@index')->name('account');
