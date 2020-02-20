@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Fact;
+use Illuminate\Support\Facades\Auth;
+
 use Illuminate\Http\Request;
 
-class HomeController extends Controller
+class AccountController extends Controller
 {
     /**
      * Create a new controller instance.
@@ -23,6 +26,8 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $user_facts = Fact::where('user_id', Auth::user()->id)->get();
+
+        return view('account')->with('user_facts', $user_facts);
     }
 }
