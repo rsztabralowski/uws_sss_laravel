@@ -15,7 +15,7 @@ class FactController extends Controller
      */
     public function index()
     {
-        $facts = Fact::all();
+        $facts = Fact::orderBy('created_at' , 'desc')->paginate(3);
 
         return view('main')->with('facts', $facts);
     }
@@ -109,6 +109,11 @@ class FactController extends Controller
      */
     public function destroy(Fact $fact)
     {
-        //
+        $fact = Fact::find($fact->id);
+        
+        Storage::delete('public/facts_images/'.$fact->photo_path);
+        
+        $fact->delete();
+        return redirect('/account')->with('success', 'Fact Removed');
     }
 }

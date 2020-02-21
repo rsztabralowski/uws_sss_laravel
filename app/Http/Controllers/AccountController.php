@@ -26,7 +26,7 @@ class AccountController extends Controller
      */
     public function index()
     {
-        $user_facts = Fact::where('user_id', Auth::user()->id)->get();
+        $user_facts = Fact::where('user_id', Auth::user()->id)->orderBy('created_at' , 'desc')->get();
 
         return view('account')->with('user_facts', $user_facts);
     }

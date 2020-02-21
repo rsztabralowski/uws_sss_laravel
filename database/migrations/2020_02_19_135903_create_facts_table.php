@@ -17,7 +17,7 @@ class CreateFactsTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('user_id')->nullable();
             $table->string('photo_path');
-            $table->string('description');
+            $table->longText('description');
             $table->timestamps();
         });
     }

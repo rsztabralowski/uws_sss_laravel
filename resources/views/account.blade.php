@@ -37,7 +37,12 @@
                                         <img style="width:200px" src="{{ url('/storage/facts_images/' .$fact->photo_path)}}">
                                     </td>
                                     <td>{{$fact->description}}</td>    
-                                    <td>Delete</td>    
+                                    <td>
+                                        {!!Form::open(['action' => ['FactController@destroy', $fact->id], 'method' => 'POST', 'class' => 'pull-right'])!!}
+                                            {{Form::hidden('_method', 'DELETE')}}
+                                            {{Form::submit('Delete', ['class' => 'btn btn-danger'])}}
+                                        {!!Form::close()!!}    
+                                    </td>    
                                 </tr>    
                             @endforeach
 
