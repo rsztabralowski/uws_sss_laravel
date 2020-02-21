@@ -6,6 +6,19 @@
         margin-left: auto;
         margin-right: 20px;
     }
+
+    img{
+        width: 200px;
+    }
+
+    @media only screen and (max-width: 992px) {
+        table{
+            font-size: 12px;
+        }
+        img{
+            width: 50px;
+        }
+    }
 </style>
 <div class="container">
     <div class="row justify-content-center">
@@ -33,10 +46,10 @@
                             </tr>
                             @foreach ($user_facts as $fact)
                                 <tr>
-                                    <td style="width:210px">
-                                        <img style="width:200px" src="{{ url('/storage/facts_images/' .$fact->photo_path)}}">
+                                    <td>
+                                        <img src="{{ url('/storage/facts_images/' .$fact->photo_path)}}">
                                     </td>
-                                    <td>{{$fact->description}}</td>    
+                                    <td class="description">{{$fact->description}}</td>    
                                     <td>
                                         {!!Form::open(['action' => ['FactController@destroy', $fact->id], 'method' => 'POST', 'class' => 'pull-right'])!!}
                                             {{Form::hidden('_method', 'DELETE')}}

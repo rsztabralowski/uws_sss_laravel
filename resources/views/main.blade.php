@@ -27,6 +27,7 @@
 
 .pagination{
    justify-content: center;
+   font-size: 25px;
 }
 
 @media only screen and (max-width: 970px) {
