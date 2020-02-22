@@ -51,7 +51,7 @@
                                     </td>
                                     <td class="description">{{$fact->description}}</td>    
                                     <td>
-                                        {!!Form::open(['action' => ['FactController@destroy', $fact->id], 'method' => 'POST', 'class' => 'pull-right'])!!}
+                                        {!!Form::open(['action' => ['FactController@destroy', $fact->id], 'method' => 'POST', 'class' => 'pull-right', 'onsubmit' => "return confirm('Are you sure you want to delete?')"])!!}
                                             {{Form::hidden('_method', 'DELETE')}}
                                             {{Form::submit('Delete', ['class' => 'btn btn-danger'])}}
                                         {!!Form::close()!!}    
