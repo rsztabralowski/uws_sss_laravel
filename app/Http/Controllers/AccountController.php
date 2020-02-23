@@ -30,4 +30,11 @@ class AccountController extends Controller
 
         return view('account')->with('user_facts', $user_facts);
     }
+
+    public function all()
+    {
+        $all_facts = Fact::all();
+
+        return view('all')->with('all_facts', $all_facts);
+    }
 }

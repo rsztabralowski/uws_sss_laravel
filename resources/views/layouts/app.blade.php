@@ -53,6 +53,10 @@
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                    @if (Auth::user()->isAdmin == 1)
+                                    <a class="dropdown-item" href="{{ route('all') }}">
+                                        {{ __('Admin View') }}
+                                    @endif
                                     <a class="dropdown-item" href="{{ route('account') }}">
                                         {{ __('My Account') }}
                                     </a>
