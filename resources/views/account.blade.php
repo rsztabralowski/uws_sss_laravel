@@ -18,6 +18,22 @@
         img{
             width: 50px;
         }
+
+        .container{
+            padding-right: 0px;
+            padding-left: 0px;
+        }
+
+        .col-md-8{
+            padding-right: 0px;
+        }
+
+        td.description{
+            max-width: 100px !important;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
     }
 </style>
 <div class="container">
