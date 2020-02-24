@@ -26,8 +26,15 @@ class AccountController extends Controller
      */
     public function index()
     {
-        $user_facts = Fact::where('user_id', Auth::user()->id)->orderBy('created_at' , 'desc')->get();
-
+        if(Auth::user()->isAdmin == 1)
+        {
+            $user_facts = Fact::orderBy('created_at' , 'desc')->get();
+        }
+        else
+        {
+            $user_facts = Fact::where('user_id', Auth::user()->id)->orderBy('created_at' , 'desc')->get();
+        }
+        
         return view('account')->with('user_facts', $user_facts);
     }
 

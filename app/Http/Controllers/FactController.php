@@ -86,7 +86,7 @@ class FactController extends Controller
      */
     public function edit(Fact $fact)
     {
-        //
+        return view('fact.edit')->with('fact', $fact);
     }
 
     /**
@@ -98,7 +98,36 @@ class FactController extends Controller
      */
     public function update(Request $request, Fact $fact)
     {
-        //
+        $this->validate($request, [
+            'description' => 'required',
+            'fact_image' => 'image|nullable|max:1999'
+        ]);
+
+        // Handle File Upload
+        if($request->hasFile('fact_image')){
+            // Get filename with the extension
+            $filenameWithExt = $request->file('fact_image')->getClientOriginalName();
+            // Get just filename
+            $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+            // Get just ext
+            $extension = $request->file('fact_image')->getClientOriginalExtension();
+            // Filename to store
+            $fileNameToStore= $filename.'_'.time().'.'.$extension;
+            // Upload Image
+            $path = $request->file('fact_image')->storeAs('public/facts_images', $fileNameToStore);
+        } 
+
+        //Update fact
+        $fact->description = $request->input('description');
+
+        if($request->hasFile('fact_image'))
+        {
+            Storage::delete('public/facts_images/'. $fact->photo_path);
+            $fact->photo_path = $fileNameToStore;
+        }
+        $fact->save();
+
+        return redirect('/account')->with('success', 'Fact Updated');
     }
 
     /**
