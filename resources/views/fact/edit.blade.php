@@ -6,8 +6,9 @@
 <br><br>
     {!! Form::open(['action' => ['FactController@update', $fact->id], 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
     {{Form::hidden('_method','PUT')}}
-        <div class="form-group">
+        <div class="form-group text-center">
             {{Form::file('fact_image')}}
+            <img class="col-md-4 col-sm-4 col-xs-4 d-inline-block" src="{{ url('/storage/facts_images/' .$fact->photo_path)}}">
         </div>
         <br>
         <div class="form-group">
