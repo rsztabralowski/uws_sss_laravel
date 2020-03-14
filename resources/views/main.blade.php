@@ -27,8 +27,7 @@
 
 .pagination{
    justify-content: center;
-   font-size: 25px;
-   overflow-x: scroll;
+   font-size: 20px;
 }
 
 @media only screen and (max-width: 970px) {
@@ -52,8 +51,6 @@
 
         
     </div>
-
-    
 @endforeach
     <div class="pagination mb-5">{{ $facts->links() }}</div>
 </div>

@@ -15,7 +15,7 @@ class FactController extends Controller
      */
     public function index()
     {
-        $facts = Fact::orderBy('created_at' , 'desc')->paginate(3);
+        $facts = Fact::orderBy('created_at' , 'desc')->paginate(5);
 
         return view('main')->with('facts', $facts);
     }
