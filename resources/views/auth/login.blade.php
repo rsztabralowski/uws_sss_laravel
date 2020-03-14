@@ -64,6 +64,14 @@
                                 @endif
                             </div>
                         </div>
+                        <br><br>
+                        <div class="form-group row mb-0">
+                            <div class="col-md-8 offset-md-4 my-auto">
+                                <a href="login/facebook" >
+                                    <img class="w-75 " src="{{ url('/storage/facts_images/facebook-sign-in-button.png') }}" alt="">
+                                </a>
+                            </div>
+                        </div>
                     </form>
                 </div>
             </div>

@@ -17,3 +17,6 @@ Route::resource('facts', 'FactController');
 Route::get('/', 'FactController@index')->name('main');
 Route::get('/account', 'AccountController@index')->name('account');
 Route::get('/all', 'AccountController@all')->middleware('admin')->name('all');
+
+Route::get('login/{provider}', 'Auth\LoginController@redirectToProvider');
+Route::get('login/{provider}/callback', 'Auth\LoginController@handleProviderCallback');
