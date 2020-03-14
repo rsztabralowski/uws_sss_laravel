@@ -66,10 +66,11 @@
                         </div>
                         <br><br>
                         <div class="form-group row mb-0">
-                            <div class="col-md-8 offset-md-4 my-auto">
-                                <a href="login/facebook" >
-                                    <img class="w-75 " src="{{ url('/storage/facts_images/facebook-sign-in-button.png') }}" alt="">
-                                </a>
+                            <div class="col-md-5 offset-md-4">
+                                <a href="login/facebook" class="btn btn-block btn-social btn-facebook">
+                                    <span class="fa fa-facebook"></span>
+                                    Login with Facebook
+                                  </a>
                             </div>
                         </div>
                     </form>
