@@ -31,3 +31,9 @@
 .cookie-consent__message{
     color: white;
 }
+
+@media only screen and (max-width: 767px) {
+    #img{
+        margin-top: 20px;
+    }
+}

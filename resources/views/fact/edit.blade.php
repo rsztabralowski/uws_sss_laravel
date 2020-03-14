@@ -8,7 +8,7 @@
     {{Form::hidden('_method','PUT')}}
         <div class="form-group text-center">
             {{Form::file('fact_image')}}
-            <img class="col-md-4 col-sm-4 col-xs-4 d-inline-block" src="{{ url('/storage/facts_images/' .$fact->photo_path)}}">
+            <img class="col-md-4 d-inline-block" id='img' src="{{ url('/storage/facts_images/' .$fact->photo_path)}}">
         </div>
         <br>
         <div class="form-group">
