@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\Fact;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use App\Http\Requests\StoreFactRequest;
+use App\Http\Requests\UpdateFactRequest;
+
 
 class FactController extends Controller
 {
@@ -36,13 +39,8 @@ class FactController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreFactRequest $request)
     {
-        $this->validate($request, [
-            'description' => 'required',
-            'fact_image' => 'image|required|max:1999'
-        ]);
-
         // Handle File Upload
         if($request->hasFile('fact_image')){
             // Get filename with the extension
@@ -96,13 +94,8 @@ class FactController extends Controller
      * @param  \App\Fact  $fact
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Fact $fact)
+    public function update(UpdateFactRequest $request, Fact $fact)
     {
-        $this->validate($request, [
-            'description' => 'required',
-            'fact_image' => 'image|nullable|max:1999'
-        ]);
-
         // Handle File Upload
         if($request->hasFile('fact_image')){
             // Get filename with the extension
