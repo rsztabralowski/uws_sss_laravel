@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Fact;
+use App\Services\UploadFileService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\StoreFactRequest;
@@ -42,24 +43,14 @@ class FactController extends Controller
     public function store(StoreFactRequest $request)
     {
         // Handle File Upload
-        if($request->hasFile('fact_image')){
-            // Get filename with the extension
-            $filenameWithExt = $request->file('fact_image')->getClientOriginalName();
-            // Get just filename
-            $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
-            // Get just ext
-            $extension = $request->file('fact_image')->getClientOriginalExtension();
-            // Filename to store
-            $fileNameToStore= $filename.'_'.time().'.'.$extension;
-            // Upload Image
-            $path = $request->file('fact_image')->storeAs('public/facts_images', $fileNameToStore);
-        } 
+        $file = new UploadFileService($request->file('fact_image'));
+        $fileNameToStore = $file->getFileName();
 
         // Create Fact
         $fact = new Fact;
         $fact->description = $request->input('description');
         $fact->user_id = auth()->user()->id;
-        $fact->photo_path= $fileNameToStore;
+        $fact->photo_path = $fileNameToStore;
         $fact->save();
 
         return redirect('/account')->with('success', 'Fact Created');
@@ -97,27 +88,16 @@ class FactController extends Controller
     public function update(UpdateFactRequest $request, Fact $fact)
     {
         // Handle File Upload
-        if($request->hasFile('fact_image')){
-            // Get filename with the extension
-            $filenameWithExt = $request->file('fact_image')->getClientOriginalName();
-            // Get just filename
-            $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
-            // Get just ext
-            $extension = $request->file('fact_image')->getClientOriginalExtension();
-            // Filename to store
-            $fileNameToStore= $filename.'_'.time().'.'.$extension;
-            // Upload Image
-            $path = $request->file('fact_image')->storeAs('public/facts_images', $fileNameToStore);
-        } 
-
-        //Update fact
-        $fact->description = $request->input('description');
-
         if($request->hasFile('fact_image'))
         {
+            $file = new UploadFileService($request->file('fact_image'));
+            $fileNameToStore = $file->getFileName();
             Storage::delete('public/facts_images/'. $fact->photo_path);
             $fact->photo_path = $fileNameToStore;
-        }
+        } 
+        
+        //Update fact
+        $fact->description = $request->input('description');
         $fact->save();
 
         return redirect('/account')->with('success', 'Fact Updated');
