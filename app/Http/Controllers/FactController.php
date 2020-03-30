@@ -42,15 +42,11 @@ class FactController extends Controller
      */
     public function store(StoreFactRequest $request)
     {
-        // Handle File Upload
-        $file = new UploadFileService($request->file('fact_image'));
-        $fileNameToStore = $file->getFileName();
-
         // Create Fact
         $fact = new Fact;
         $fact->description = $request->input('description');
         $fact->user_id = auth()->user()->id;
-        $fact->photo_path = $fileNameToStore;
+        $fact->photo_path = UploadFileService::getFileName($request->file('fact_image'));
         $fact->save();
 
         return redirect('/account')->with('success', 'Fact Created');
@@ -90,10 +86,7 @@ class FactController extends Controller
         // Handle File Upload
         if($request->hasFile('fact_image'))
         {
-            $file = new UploadFileService($request->file('fact_image'));
-            $fileNameToStore = $file->getFileName();
-            Storage::delete('public/facts_images/'. $fact->photo_path);
-            $fact->photo_path = $fileNameToStore;
+            $fact->photo_path = UploadFileService::getFileName($request->file('fact_image'), $fact->photo_path);
         } 
         
         //Update fact

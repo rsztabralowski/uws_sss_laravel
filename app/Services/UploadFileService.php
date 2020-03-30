@@ -2,28 +2,34 @@
 
 namespace App\Services;
 
+use Illuminate\Support\Facades\Storage;
+
 class UploadFileService
 {
-
-    private $file;
-
-    public function __construct($file)
-    {
-        $this->file = $file;
-    }
-
-    public function getFileName()
+    /**
+     * Handle file upload.
+     * @param file to upload
+     * @param old file path to remove
+     * @return fileNameToStore
+     */
+    public static function getFileName($file, $oldPath = null)
     {
          // Get filename with the extension
-         $filenameWithExt = $this->file->getClientOriginalName();
+         $filenameWithExt = $file->getClientOriginalName();
          // Get just filename
          $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
          // Get just ext
-         $extension = $this->file->getClientOriginalExtension();
+         $extension = $file->getClientOriginalExtension();
          // Filename to store
          $fileNameToStore= $filename.'_'.time().'.'.$extension;
-         //Upload image
-         $path = $this->file->storeAs('public/facts_images', $fileNameToStore);
+         // Upload image
+         $path = $file->storeAs('public/facts_images', $fileNameToStore);
+
+        if($oldPath != null)
+        {
+            // Remove old file
+            Storage::delete('public/facts_images/'. $oldPath);
+        }
          
          return $fileNameToStore;
     }
