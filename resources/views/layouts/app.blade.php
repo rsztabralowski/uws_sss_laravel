@@ -58,18 +58,23 @@
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                    @if (Auth::user()->isAdmin == 1)
-                                    <a class="dropdown-item" href="{{ route('all') }}">
-                                        {{ __('Admin View') }}
-                                    @endif
-                                    <a class="dropdown-item" href="{{ route('account') }}">
-                                        {{ __('My Account') }}
-                                    </a>
-                                    <a class="dropdown-item" href="{{ route('logout') }}"
-                                       onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
-                                    </a>
+                                    @can ('is-admin')
+                                        <a class="dropdown-item" href="{{ route('account') }}">
+                                            {{ __('Manage Facts') }}
+                                        </a>
+                                        <a class="dropdown-item" href="{{ route('users') }}">
+                                            {{ __('Manage Users') }}
+                                        </a>
+                                    @else
+                                        <a class="dropdown-item" href="{{ route('account') }}">
+                                            {{ __('My Account') }}
+                                        </a>
+                                    @endcan
+                                        <a class="dropdown-item" href="{{ route('logout') }}"
+                                        onclick="event.preventDefault();
+                                                        document.getElementById('logout-form').submit();">
+                                            {{ __('Logout') }}
+                                        </a>
 
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                         @csrf

@@ -38,7 +38,7 @@
 </style>
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-8">
+        <div class="col-md-10">
             <div class="card">
                 <div class="card-header">Dashboard</div>
                 <div class="card-body overflow-auto">
@@ -73,12 +73,11 @@
                                     @can('is_admin')
                                         <td>{{$fact->author->name}}</td>
                                     @endcan    
-                                    <td>
+                                    <td class="d-flex">
                                         <div>
                                             <a href="{{route('facts.edit', $fact->id)}}"><button class="btn btn-primary btn-sm">Edit</button></a>
                                         </div>
-                                        <br>
-                                        {!!Form::open(['action' => ['FactController@destroy', $fact->id], 'method' => 'POST', 'class' => 'pull-right', 'onsubmit' => "return confirm('Are you sure you want to delete?')"])!!}
+                                        {!!Form::open(['action' => ['FactController@destroy', $fact->id], 'method' => 'POST', 'class' => 'ml-1', 'onsubmit' => "return confirm('Are you sure you want to delete?')"])!!}
                                             {{Form::hidden('_method', 'DELETE')}}
                                             {{Form::submit('Delete', ['class' => 'btn btn-danger btn-sm'])}}
                                         {!!Form::close()!!}    

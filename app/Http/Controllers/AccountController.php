@@ -3,9 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Fact;
-use Illuminate\Support\Facades\Auth;
+use App\User;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AccountController extends Controller
 {
@@ -43,5 +44,13 @@ class AccountController extends Controller
         $all_facts = Fact::all();
 
         return view('all')->with('all_facts', $all_facts);
+    }
+
+    public function users()
+    {
+        $users = User::all();
+        $users_removed = User::onlyTrashed()->get();
+
+        return view('users')->with(['users' =>$users, 'users_removed' => $users_removed]);
     }
 }
