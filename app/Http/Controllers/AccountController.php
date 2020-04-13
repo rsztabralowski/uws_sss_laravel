@@ -7,6 +7,7 @@ use App\User;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
 class AccountController extends Controller
 {
@@ -27,7 +28,7 @@ class AccountController extends Controller
      */
     public function index()
     {
-        if(Auth::user()->isAdmin == 1)
+        if(Gate::allows('is_admin'))
         {
             $user_facts = Fact::orderBy('created_at' , 'desc')->get();
         }

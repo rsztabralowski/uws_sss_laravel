@@ -104,8 +104,6 @@ class FactController extends Controller
      */
     public function destroy(Fact $fact)
     {
-        $fact = Fact::find($fact->id);
-        
         Storage::delete('public/facts_images/'.$fact->photo_path);
         
         $fact->delete();
