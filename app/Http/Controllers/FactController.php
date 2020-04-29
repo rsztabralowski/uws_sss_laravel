@@ -3,15 +3,22 @@
 namespace App\Http\Controllers;
 
 use App\Fact;
-use App\Services\UploadFileService;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
+use App\Services\UploadFileService;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\StoreFactRequest;
+use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\UpdateFactRequest;
 
 
 class FactController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth', ['except' => 'index']);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -45,7 +52,7 @@ class FactController extends Controller
         // Create Fact
         $fact = new Fact;
         $fact->description = $request->input('description');
-        $fact->user_id = auth()->user()->id;
+        $fact->user_id = Auth::id();
         $fact->photo_path = UploadFileService::getFileName($request->file('fact_image'));
         $fact->save();
 
@@ -71,7 +78,10 @@ class FactController extends Controller
      */
     public function edit(Fact $fact)
     {
-        return view('fact.edit')->with('fact', $fact);
+        if(Auth::id() == $fact->user_id || Auth::user()->isAdmin)
+            return view('fact.edit')->with('fact', $fact);
+        
+        return redirect('/account')->with('error', 'You do not have permission to edit this fact');
     }
 
     /**
